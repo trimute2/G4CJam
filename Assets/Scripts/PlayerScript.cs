@@ -37,7 +37,7 @@ public class PlayerScript : MonoBehaviour
 
 		Vector3 directionInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		movementDirection = directionInput.normalized * speed;
-		Debug.Log("test:" + Input.GetJoystickNames().Length);
+		//Debug.Log("test:" + Input.GetJoystickNames()[0]);
 		/* if(Input.GetJoystickNames().Length > 0)
 		 {
 			 //do rotation if joystick is connected
@@ -48,7 +48,29 @@ public class PlayerScript : MonoBehaviour
 			 Vector3 mousePos = Input.mousePosition;
 			 Debug.Log(mousePos);
 		 }*/
-		UpdateRotationWithMouse();
+		bool handledInput = false;
+		 if(Input.GetJoystickNames().Length > 0)
+		{
+			for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+			{
+				if(Input.GetJoystickNames()[i] != "")
+				{
+					//Debug.Log("t");
+					handledInput = true;
+					Vector2 inputLook = new Vector2(Input.GetAxis("LookX"), Input.GetAxis("LookY"));
+					if(inputLook.x != 0 && inputLook.y != 0)
+					{
+						inputLook.Normalize();
+						SetRotation(inputLook.x, inputLook.y);
+					}
+				}
+			}
+		}
+
+		if (!handledInput)
+		{
+			UpdateRotationWithMouse();
+		}
 
 	}
 
@@ -60,9 +82,14 @@ public class PlayerScript : MonoBehaviour
 		mousePos.z = 0;
 		mousePos.Normalize();
 		//Debug.Log(mousePos);
-		float angle = Mathf.Atan2(-mousePos.y, mousePos.x);
+		SetRotation(mousePos.x, -mousePos.y);
+	}
+
+	private void SetRotation(float x, float y)
+	{
+		float angle = Mathf.Atan2(y, x);
 		//Debug.Log(angle);
-		transform.rotation = Quaternion.Euler(0, angle * Mathf.Rad2Deg,0);
+		transform.rotation = Quaternion.Euler(0, angle * Mathf.Rad2Deg, 0);
 	}
 
 	private void FixedUpdate()
