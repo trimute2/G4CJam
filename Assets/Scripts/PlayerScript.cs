@@ -65,7 +65,7 @@ public class PlayerScript : MonoBehaviour
 					}
 					else
 					{
-						if(Mathf.Abs(Input.GetAxisRaw("LookX")) > 0.19f || Mathf.Abs(Input.GetAxisRaw("LookX")) > 0.19f)
+						if(Mathf.Abs(Input.GetAxisRaw("LookX")) > 0.19f || Mathf.Abs(Input.GetAxisRaw("LookY")) > 0.19f)
 						{
 							inputLook = new Vector2(Input.GetAxisRaw("LookX"), Input.GetAxisRaw("LookY"));
 							inputLook.Normalize();
@@ -96,7 +96,7 @@ public class PlayerScript : MonoBehaviour
 
 	private void SetRotation(float x, float y)
 	{
-		Debug.Log(x +","+ y);
+		//Debug.Log(x +","+ y);
 		float angle = Mathf.Atan2(y, x);
 		//Debug.Log(angle);
 		transform.rotation = Quaternion.Euler(0, angle * Mathf.Rad2Deg, 0);
