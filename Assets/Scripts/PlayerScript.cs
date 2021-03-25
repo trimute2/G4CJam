@@ -8,8 +8,9 @@ public class PlayerScript : MonoBehaviour
 
 	public float speed = 5;
 
-	public Camera camera;
+	public Camera playerCamera;
 
+	public GameObject projectile;
 	//Vector3 HorizontalInputModifier = new Vector3(0.5f, 0, -0.5f);
 	//Vector3 VerticalInputModifier = new Vector3(0.5f, 0, 0.5f);
 
@@ -17,11 +18,17 @@ public class PlayerScript : MonoBehaviour
 
 	private CharacterController characterController;
 
+	public static PlayerScript Instance
+	{
+		get;
+		private set;
+	}
+
 	// Start is called before the first frame update
 	void Start()
     {
 		characterController = GetComponent<CharacterController>();
-
+		Instance = this;
 	}
 
     // Update is called once per frame
@@ -87,7 +94,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		Vector3 mousePos = Input.mousePosition;
 		//mousePos.z = 8.746911f;
-		mousePos -= camera.WorldToScreenPoint(transform.position);
+		mousePos -= playerCamera.WorldToScreenPoint(transform.position);
 		mousePos.z = 0;
 		mousePos.Normalize();
 		//Debug.Log(mousePos);
