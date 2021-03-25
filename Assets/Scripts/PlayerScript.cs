@@ -136,7 +136,7 @@ public class PlayerScript : MonoBehaviour
 		EnemyProjectile projectile = other.GetComponent<EnemyProjectile>();
 		if(projectile != null)
 		{
-			Vector3 difference = projectile.transform.position - transform.position;
+			/*Vector3 difference = projectile.transform.position - transform.position;
 			float impactAngle = Mathf.Atan2(difference.z, difference.x);
 			if(difference.x < 0)
 			{
@@ -146,32 +146,85 @@ public class PlayerScript : MonoBehaviour
 				impactAngle += Mathf.PI * 2;
 			}
 			impactAngle *= Mathf.Rad2Deg;
-
+			Debug.Log(impactAngle);
+			Debug.Log(transform.eulerAngles.y);
 			float impactShield = impactAngle - transform.rotation.eulerAngles.y + 60;
 			impactShield = ((impactShield%360)+360)%360; //prior totoday i dont think i realized mod didn follow the euclidean definition
+			Debug.Log(impactShield);
 			int shield = Mathf.FloorToInt(impactShield / 120);
 
-			int hit = ((int)frontColor + shield)%3;
-			/*switch (hit)
+			int hit = ((int)frontColor + shield)%3;*/
+			Vector3 toPosition = (projectile.transform.position - transform.position).normalized;
+			float angleToPosition = Vector3.SignedAngle(transform.right, toPosition,Vector3.up)+60;
+			angleToPosition = ((angleToPosition % 360) + 360) % 360;
+			int shield = Mathf.FloorToInt(angleToPosition / 120);
+			int hit = ((int)frontColor + shield) % 3;
+			switch (hit)
 			{
 				case 0:
 					Debug.Log("hit red shield");
 					break;
 				case 1:
-					Debug.Log("hit greend shield");
+					Debug.Log("hit green shield");
 					break;
 				case 2:
 					Debug.Log("hit blue shield");
 					break;
-			}*/
-			if((int)projectile.ProjectileColor == hit)
-			{
-				Debug.Log("blocked projectile");
 			}
-			else
-			{
-				Debug.Log("hit");
-			}
+			//if((int)projectile.ProjectileColor == hit)
+			//{
+			//	Debug.Log("blocked projectile");
+			//}
+			//else
+			//{
+			//	Debug.Log("hit");
+			//}
 		}
+	}
+
+	//copied from here for testing keeping it in until we get a way to represent shields
+
+	private void OnDrawGizmos()
+	{
+		
+		Gizmos.color = Color.red;
+		float ang = -transform.rotation.eulerAngles.y;
+		Vector3 dir = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), 0, Mathf.Sin(ang * Mathf.Deg2Rad));
+		DrawWireArc(transform.position, dir, 120, 5);
+		Gizmos.color = Color.blue;
+		dir = new Vector3(Mathf.Cos((ang + 120) * Mathf.Deg2Rad), 0, Mathf.Sin((ang + 120) * Mathf.Deg2Rad));
+		DrawWireArc(transform.position, dir, 120, 5);
+		Gizmos.color = Color.green;
+		dir = new Vector3(Mathf.Cos((ang + 240) * Mathf.Deg2Rad), 0, Mathf.Sin((ang + 240) * Mathf.Deg2Rad));
+		DrawWireArc(transform.position, dir, 120, 5);
+	}
+
+	public static void DrawWireArc(Vector3 position, Vector3 dir, float anglesRange, float radius, float maxSteps = 20)
+	{
+		var srcAngles = GetAnglesFromDir(position, dir);
+		var initialPos = position;
+		var posA = initialPos;
+		var stepAngles = anglesRange / maxSteps;
+		var angle = srcAngles - anglesRange / 2;
+		for (var i = 0; i <= maxSteps; i++)
+		{
+			var rad = Mathf.Deg2Rad * angle;
+			var posB = initialPos;
+			posB += new Vector3(radius * Mathf.Cos(rad), 0, radius * Mathf.Sin(rad));
+
+			Gizmos.DrawLine(posA, posB);
+
+			angle += stepAngles;
+			posA = posB;
+		}
+		Gizmos.DrawLine(posA, initialPos);
+	}
+
+	static float GetAnglesFromDir(Vector3 position, Vector3 dir)
+	{
+		var forwardLimitPos = position + dir;
+		var srcAngles = Mathf.Rad2Deg * Mathf.Atan2(forwardLimitPos.z - position.z, forwardLimitPos.x - position.x);
+
+		return srcAngles;
 	}
 }
