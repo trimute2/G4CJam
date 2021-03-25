@@ -11,6 +11,8 @@ public class PlayerScript : MonoBehaviour
 	public Camera playerCamera;
 
 	public GameObject projectile;
+
+	public TestUI testUI;
 	//Vector3 HorizontalInputModifier = new Vector3(0.5f, 0, -0.5f);
 	//Vector3 VerticalInputModifier = new Vector3(0.5f, 0, 0.5f);
 
@@ -24,11 +26,15 @@ public class PlayerScript : MonoBehaviour
 		private set;
 	}
 
+	private BasicEnemy.EnemyColor frontColor;
+
 	// Start is called before the first frame update
 	void Start()
     {
 		characterController = GetComponent<CharacterController>();
 		Instance = this;
+		frontColor = BasicEnemy.EnemyColor.red;
+		testUI.SetFront(frontColor);
 	}
 
     // Update is called once per frame
@@ -56,7 +62,7 @@ public class PlayerScript : MonoBehaviour
 			 Debug.Log(mousePos);
 		 }*/
 		bool handledInput = false;
-		 if(Input.GetJoystickNames().Length > 0)
+		if (Input.GetJoystickNames().Length > 0)
 		{
 			for(int i = 0; i < Input.GetJoystickNames().Length; i++)
 			{
@@ -82,12 +88,22 @@ public class PlayerScript : MonoBehaviour
 				}
 			}
 		}
-
 		if (!handledInput)
 		{
 			UpdateRotationWithMouse();
 		}
+		if (Input.GetButtonDown("Fire2"))
+		{
+			RotateShield();
+		}
+	}
 
+	private void RotateShield()
+	{
+		int shieldColor = (int)frontColor;
+		shieldColor = (shieldColor + 1) % 3;
+		frontColor = (BasicEnemy.EnemyColor)shieldColor;
+		testUI.SetFront(frontColor);
 	}
 
 	private void UpdateRotationWithMouse()
@@ -113,5 +129,49 @@ public class PlayerScript : MonoBehaviour
 	{
 		//transform.position += movementDirection;
 		characterController.Move(movementDirection);
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		EnemyProjectile projectile = other.GetComponent<EnemyProjectile>();
+		if(projectile != null)
+		{
+			Vector3 difference = projectile.transform.position - transform.position;
+			float impactAngle = Mathf.Atan2(difference.z, difference.x);
+			if(difference.x < 0)
+			{
+				impactAngle += Mathf.PI;
+			}else if(difference.z < 0)
+			{
+				impactAngle += Mathf.PI * 2;
+			}
+			impactAngle *= Mathf.Rad2Deg;
+
+			float impactShield = impactAngle - transform.rotation.eulerAngles.y + 60;
+			impactShield = ((impactShield%360)+360)%360; //prior totoday i dont think i realized mod didn follow the euclidean definition
+			int shield = Mathf.FloorToInt(impactShield / 120);
+
+			int hit = ((int)frontColor + shield)%3;
+			/*switch (hit)
+			{
+				case 0:
+					Debug.Log("hit red shield");
+					break;
+				case 1:
+					Debug.Log("hit greend shield");
+					break;
+				case 2:
+					Debug.Log("hit blue shield");
+					break;
+			}*/
+			if((int)projectile.ProjectileColor == hit)
+			{
+				Debug.Log("blocked projectile");
+			}
+			else
+			{
+				Debug.Log("hit");
+			}
+		}
 	}
 }
