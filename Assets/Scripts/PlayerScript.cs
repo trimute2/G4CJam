@@ -104,7 +104,7 @@ public class PlayerScript : MonoBehaviour
 		if (Cooldown < fireRate)
 		{
 			Cooldown += Time.deltaTime;
-		}else if (Input.GetButtonDown("Fire1"))
+		}else if (Input.GetButtonDown("Fire1") || Input.GetAxis("ControllerFire") > 0.8)
 		{
 			Vector3 firePoint = transform.position;
 			firePoint.y += fireHeight;
