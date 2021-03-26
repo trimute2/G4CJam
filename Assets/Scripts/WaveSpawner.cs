@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class WaveSpawner : MonoBehaviour
 	public Wave[] waves;
 	public int currentWave;
 
+	public Action<int> OnWaveEnd;
+
 	private int killsCurrentWave;
 	private int TotalCurrentEnemies;
 
@@ -17,12 +20,6 @@ public class WaveSpawner : MonoBehaviour
     void Start()
     {
 		SpawnWave();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
 	public void SpawnWave()
@@ -43,6 +40,10 @@ public class WaveSpawner : MonoBehaviour
 	{
 		killsCurrentWave++;
 		TotalCurrentEnemies--;
+		if(TotalCurrentEnemies == 0)
+		{
+			OnWaveEnd?.Invoke(currentWave);
+		}
 		if( currentWave < waves.Length &&
 			((waves[currentWave].WaitForAllEnemiesToDie && TotalCurrentEnemies == 0) || 
 			(!waves[currentWave].WaitForAllEnemiesToDie && killsCurrentWave >= waves[currentWave].EnemiesToKillForWaveToStart)))
