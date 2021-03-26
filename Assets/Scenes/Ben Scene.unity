@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964137, b: 0.57481873, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964137, b: 0.5748188, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -43370,9 +43370,13 @@ MonoBehaviour:
   shield: {fileID: 1118634994}
   DamageParticle: {fileID: 154672, guid: e518b4ac4faac2246965b820629da9f4, type: 3}
   LoseCanvas: {fileID: 330244624}
-  FireSounds: []
-  BlockSound: {fileID: 0}
-  DamageSound: {fileID: 0}
+  FireSounds:
+  - {fileID: 8300000, guid: 783df54eee2024840a86d06b46aa5689, type: 3}
+  - {fileID: 8300000, guid: 3984c0b2a721eb74881e12beece1aba8, type: 3}
+  - {fileID: 8300000, guid: ff7e30a1004455842abab954fae76f34, type: 3}
+  - {fileID: 8300000, guid: 57fb1a3b83af4c04ebec26eff8badc16, type: 3}
+  BlockSound: {fileID: 8300000, guid: fc783f81f5e143847bf0d934bd8dad21, type: 3}
+  DamageSound: {fileID: 8300000, guid: 1699f6fb80301544fb205ee141fafc1c, type: 3}
 --- !u!1 &1835054976
 GameObject:
   m_ObjectHideFlags: 0
