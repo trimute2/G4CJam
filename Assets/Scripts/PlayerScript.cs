@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerScript : MonoBehaviour
 {
 
@@ -23,12 +24,20 @@ public class PlayerScript : MonoBehaviour
 	public Transform shield;
 
 	public GameObject DamageParticle;
+
+	[Header("Sounds")]
+	public AudioClip[] FireSounds;
+	public AudioClip BlockSound;
+	public AudioClip DamageSound;
+
 	//Vector3 HorizontalInputModifier = new Vector3(0.5f, 0, -0.5f);
 	//Vector3 VerticalInputModifier = new Vector3(0.5f, 0, 0.5f);
 
 	private Vector3 movementDirection;
 
 	private CharacterController characterController;
+
+	private AudioSource audioSource;
 
 	private float Cooldown;
 
@@ -46,6 +55,7 @@ public class PlayerScript : MonoBehaviour
 	void Start()
     {
 		characterController = GetComponent<CharacterController>();
+		audioSource = GetComponent<AudioSource>();
 		Instance = this;
 		frontColor = BasicEnemy.EnemyColor.red;
 		ammunition = 0;
@@ -117,6 +127,8 @@ public class PlayerScript : MonoBehaviour
 			GameObject projectileObject = Instantiate(projectile, firePoint, Quaternion.identity);
 			PlayerProjectile firingProjectile = projectileObject.GetComponent<PlayerProjectile>();
 			firingProjectile.Direction = transform.forward;
+			audioSource.PlayOneShot(FireSounds[Random.Range(0,FireSounds.Length)]);
+
 			ammunition--;
 			Cooldown = 0;
 		}
@@ -203,6 +215,7 @@ public class PlayerScript : MonoBehaviour
 			}*/
 			if ((int)projectile.ProjectileColor == hit)
 			{
+				audioSource.PlayOneShot(BlockSound);
 				ammunition++;
 				
 			}
@@ -218,6 +231,7 @@ public class PlayerScript : MonoBehaviour
 	private void TakeDamage()
 	{
 		health--;
+		audioSource.PlayOneShot(DamageSound);
 		Vector3 firePoint = transform.position;
 		firePoint.y += fireHeight;
 		Instantiate(DamageParticle, firePoint, Quaternion.identity);
