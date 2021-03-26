@@ -30,6 +30,9 @@ public class BasicEnemy : MonoBehaviour
 	public float fireHeight;
 
 	public GameObject Person;
+	public GameObject HealPerson;
+	[Range(0,1)]
+	public float HealPersonChance;
 
 	[Header("Color Change Stuff")]
 	public Material redMat;
@@ -118,10 +121,12 @@ public class BasicEnemy : MonoBehaviour
 	private void Die()
 	{
 		OnDeath?.Invoke();
-		if(Person != null)
+		GameObject toInstantiate = Person;
+		if(UnityEngine.Random.Range(0,1) < HealPersonChance)
 		{
-			Instantiate(Person, transform.position, Quaternion.identity);
+			toInstantiate = HealPerson;
 		}
+		Instantiate(toInstantiate, transform.position, Quaternion.identity);
 
 		Destroy(gameObject);
 	}
