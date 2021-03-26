@@ -15799,8 +15799,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 857356149231582435, guid: bd5b74b69426b4fc5a7a0a3230dee190,
         type: 3}
-      propertyPath: m_Height
-      value: 2
+      propertyPath: m_SlopeLimit
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1242633740202940391, guid: bd5b74b69426b4fc5a7a0a3230dee190,
         type: 3}
@@ -15901,6 +15901,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880485941178713392, guid: bd5b74b69426b4fc5a7a0a3230dee190,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880485941178713392, guid: bd5b74b69426b4fc5a7a0a3230dee190,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5898371342239302560, guid: bd5b74b69426b4fc5a7a0a3230dee190,
         type: 3}
