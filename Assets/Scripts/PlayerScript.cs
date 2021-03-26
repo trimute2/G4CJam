@@ -200,6 +200,7 @@ public class PlayerScript : MonoBehaviour
 			if ((int)projectile.ProjectileColor == hit)
 			{
 				ammunition++;
+				Debug.Log(ammunition);
 			}
 			else
 			{
