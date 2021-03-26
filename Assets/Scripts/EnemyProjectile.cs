@@ -56,6 +56,9 @@ public class EnemyProjectile : MonoBehaviour
 		}
 	}
 
+	[HideInInspector]
+	public bool MunitionHandled;
+
 	private Vector3 movementVector;
 
 	//private Rigidbody projectileBody;

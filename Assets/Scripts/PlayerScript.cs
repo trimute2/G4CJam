@@ -161,7 +161,7 @@ public class PlayerScript : MonoBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		EnemyProjectile projectile = other.GetComponent<EnemyProjectile>();
-		if(projectile != null)
+		if(projectile != null && !projectile.MunitionHandled)
 		{
 			/*Vector3 difference = projectile.transform.position - transform.position;
 			float impactAngle = Mathf.Atan2(difference.z, difference.x);
@@ -207,6 +207,8 @@ public class PlayerScript : MonoBehaviour
 			{
 				Debug.Log("hit");
 			}
+
+			projectile.MunitionHandled = true;
 		}
 	}
 
