@@ -115,6 +115,7 @@ public class PlayerScript : MonoBehaviour
 			PlayerProjectile firingProjectile = projectileObject.GetComponent<PlayerProjectile>();
 			firingProjectile.Direction = transform.forward;
 			ammunition--;
+			Cooldown = 0;
 		}
 
 		if (Input.GetButtonDown("Fire2") || Input.GetAxis("ControllerShield") > 0.3)
