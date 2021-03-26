@@ -5,12 +5,14 @@ using UnityEngine;
 public class WaveSpawner : MonoBehaviour
 {
 
+	public GameObject EnemyPrefab;
 	public Wave[] waves;
+	public int currentWave;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+		SpawnWave();
     }
 
     // Update is called once per frame
@@ -18,6 +20,16 @@ public class WaveSpawner : MonoBehaviour
     {
         
     }
+
+	public void SpawnWave()
+	{
+		foreach(WaveEnemies enemy in waves[currentWave].enemies)
+		{
+			GameObject enemySpawning = Instantiate(EnemyPrefab, enemy.Position, Quaternion.identity);
+			BasicEnemy enemyCode = enemySpawning.GetComponent<BasicEnemy>();
+			enemyCode.ChangeColor(enemy.color);
+		}
+	}
 }
 
 [System.Serializable]

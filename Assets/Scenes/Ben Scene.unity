@@ -15797,6 +15797,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 857356149231582435, guid: bd5b74b69426b4fc5a7a0a3230dee190,
+        type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1242633740202940391, guid: bd5b74b69426b4fc5a7a0a3230dee190,
         type: 3}
       propertyPath: m_Layer
@@ -15965,17 +15970,17 @@ PrefabInstance:
     - target: {fileID: 8008478838230272108, guid: bd5b74b69426b4fc5a7a0a3230dee190,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8008478838230272108, guid: bd5b74b69426b4fc5a7a0a3230dee190,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8008478838230272108, guid: bd5b74b69426b4fc5a7a0a3230dee190,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8008478838230272108, guid: bd5b74b69426b4fc5a7a0a3230dee190,
         type: 3}
@@ -31428,11 +31433,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611fc0cd058ae324ebeb0d8a743d60c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EnemyPrefab: {fileID: 6447057667811981951, guid: bd5b74b69426b4fc5a7a0a3230dee190,
+    type: 3}
   waves:
   - EnemiesToKillForWaveToStart: 0
     enemies:
-    - Position: {x: -16.739222, y: 0, z: -19.044022}
-      color: 0
+    - Position: {x: -22.522297, y: 0, z: -19.044022}
+      color: 2
+  currentWave: 0
 --- !u!4 &1329657079
 Transform:
   m_ObjectHideFlags: 0
