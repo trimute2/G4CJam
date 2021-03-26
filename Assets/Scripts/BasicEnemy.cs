@@ -29,6 +29,8 @@ public class BasicEnemy : MonoBehaviour
 
 	public float fireHeight;
 
+	public GameObject Person;
+
 	[Header("Color Change Stuff")]
 	public Material redMat;
 	public Material greenMat;
@@ -116,6 +118,11 @@ public class BasicEnemy : MonoBehaviour
 	private void Die()
 	{
 		OnDeath?.Invoke();
+		if(Person != null)
+		{
+			Instantiate(Person, transform.position, Quaternion.identity);
+		}
+
 		Destroy(gameObject);
 	}
 }
