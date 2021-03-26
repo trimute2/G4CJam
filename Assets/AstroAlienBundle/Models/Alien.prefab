@@ -942,7 +942,7 @@ MonoBehaviour:
   projectile: {fileID: 450702699345266203, guid: 1bbc2ccad5f4af742a04229064f82a71,
     type: 3}
   fireHeight: 1.465
-  Person: {fileID: 0}
+  Person: {fileID: 5670089184543096649, guid: 7a15852fe87f7dc4c81a81b4e3656886, type: 3}
   redMat: {fileID: 2100000, guid: bf41a7c0857f02147a2c8671b425dfc3, type: 2}
   greenMat: {fileID: 2100000, guid: fd41c5051b2895d4b89f22a5d4f62f57, type: 2}
   blueMat: {fileID: 2100000, guid: 7fa075906004b5e4da015a81cbafe44d, type: 2}

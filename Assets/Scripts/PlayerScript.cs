@@ -133,11 +133,21 @@ public class PlayerScript : MonoBehaviour
 			Cooldown = 0;
 		}
 
-		if (Input.GetButtonDown("Fire2") || Input.GetAxis("ControllerShield") > 0.3)
+		if (Input.GetButtonDown("Fire2") || (Input.GetAxis("ControllerShield") > 0.3))
 		{
-			RotateShield();
+			if (shieldInputStuff)
+			{
+				RotateShield();
+				shieldInputStuff = true;
+			}
+		}
+		else
+		{
+			shieldInputStuff = false;
 		}
 	}
+
+	private bool shieldInputStuff;
 
 	private void RotateShield()
 	{
