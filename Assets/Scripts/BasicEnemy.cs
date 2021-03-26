@@ -41,6 +41,7 @@ public class BasicEnemy : MonoBehaviour
     {
 		movementDirection = Vector3.zero;
 		Vector3 targetDiff = PlayerScript.Instance.transform.position - transform.position;
+		targetDiff.y = 0;
 		if(targetDiff.sqrMagnitude > MoveDistance * MoveDistance)
 		{
 			movementDirection = targetDiff.normalized * speed;
