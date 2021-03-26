@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TransformEffect: {fileID: 172526, guid: 836a6e787e3b11941b38b8fff2af4e5b, type: 3}
-  _speed: 0.1
+  _speed: 0.5
 --- !u!54 &-5506888546236328649
 Rigidbody:
   m_ObjectHideFlags: 0
