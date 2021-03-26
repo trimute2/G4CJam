@@ -14,6 +14,8 @@ public class BasicEnemy : MonoBehaviour
 		blue
 	}
 
+	public EnemyColor color;
+
 	public float MoveDistance;
 
 	public float fireDistance;
@@ -55,6 +57,7 @@ public class BasicEnemy : MonoBehaviour
 			GameObject projectileObject = Instantiate(projectile, transform.position, Quaternion.identity);
 			EnemyProjectile firingProjectile = projectileObject.GetComponent<EnemyProjectile>();
 			firingProjectile.Direction = targetDiff;
+			firingProjectile.ProjectileColor = color;
 			Cooldown = 0;
 		}
     }
@@ -62,5 +65,19 @@ public class BasicEnemy : MonoBehaviour
 	private void FixedUpdate()
 	{
 		characterController.Move(movementDirection);
+	}
+
+	private void OnTriggerEnter(Collider collision)
+	{
+		PlayerProjectile proj = collision.GetComponent<PlayerProjectile>();
+		if(proj != null)
+		{
+			Die();
+		}
+	}
+
+	private void Die()
+	{
+		Destroy(gameObject);
 	}
 }

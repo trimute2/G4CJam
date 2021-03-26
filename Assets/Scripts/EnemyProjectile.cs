@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class EnemyProjectile : MonoBehaviour
 {
+
+	public GameObject redPrefab;
+
+	public GameObject greenPrefab;
+
+	public GameObject bluePrefab;
+
 	private BasicEnemy.EnemyColor _color;
 
 	public BasicEnemy.EnemyColor ProjectileColor
@@ -16,6 +23,7 @@ public class EnemyProjectile : MonoBehaviour
 		set
 		{
 			_color = value;
+			UpdateColor();
 		}
 	}
 
@@ -66,7 +74,22 @@ public class EnemyProjectile : MonoBehaviour
 
 	private void UpdateColor()
 	{
-		throw new NotImplementedException();
+		GameObject prefab = null;
+		switch (_color)
+		{
+			default:
+			case BasicEnemy.EnemyColor.red:
+				prefab = redPrefab;
+				break;
+			case BasicEnemy.EnemyColor.green:
+				prefab = greenPrefab;
+				break;
+			case BasicEnemy.EnemyColor.blue:
+				prefab = bluePrefab;
+				break;
+		}
+		Instantiate(prefab, transform);
+		//throw new NotImplementedException();
 	}
 
 	private void FixedUpdate()
