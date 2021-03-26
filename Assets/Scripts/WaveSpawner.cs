@@ -9,6 +9,10 @@ public class WaveSpawner : MonoBehaviour
 	public Wave[] waves;
 	public int currentWave;
 
+	private int killsCurrentWave;
+	private int TotalCurrentEnemies;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +32,22 @@ public class WaveSpawner : MonoBehaviour
 			GameObject enemySpawning = Instantiate(EnemyPrefab, enemy.Position, Quaternion.identity);
 			BasicEnemy enemyCode = enemySpawning.GetComponent<BasicEnemy>();
 			enemyCode.ChangeColor(enemy.color);
+			enemyCode.OnDeath += RegisterEnemyDeath;
+			TotalCurrentEnemies++;
+		}
+		killsCurrentWave = 0;
+		currentWave++;
+	}
+
+	public void RegisterEnemyDeath()
+	{
+		killsCurrentWave++;
+		TotalCurrentEnemies--;
+		if( currentWave < waves.Length &&
+			((waves[currentWave].WaitForAllEnemiesToDie && TotalCurrentEnemies == 0) || 
+			(!waves[currentWave].WaitForAllEnemiesToDie && killsCurrentWave >= waves[currentWave].EnemiesToKillForWaveToStart)))
+		{
+			SpawnWave();
 		}
 	}
 }
@@ -35,6 +55,7 @@ public class WaveSpawner : MonoBehaviour
 [System.Serializable]
 public struct Wave
 {
+	public bool WaitForAllEnemiesToDie;
 	public int EnemiesToKillForWaveToStart;
 	public WaveEnemies[] enemies;
 }

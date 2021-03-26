@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,6 +34,8 @@ public class BasicEnemy : MonoBehaviour
 	public Material greenMat;
 	public Material blueMat;
 	public MeshRenderer ColorThings;
+
+	public Action OnDeath;
 
 	private float Cooldown;
 
@@ -112,6 +115,7 @@ public class BasicEnemy : MonoBehaviour
 
 	private void Die()
 	{
+		OnDeath?.Invoke();
 		Destroy(gameObject);
 	}
 }
