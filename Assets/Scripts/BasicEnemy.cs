@@ -26,6 +26,14 @@ public class BasicEnemy : MonoBehaviour
 
 	public GameObject projectile;
 
+	public float fireHeight;
+
+	[Header("Color Change Stuff")]
+	public Material redMat;
+	public Material greenMat;
+	public Material blueMat;
+	public MeshRenderer ColorThings;
+
 	private float Cooldown;
 
 	private CharacterController characterController;
@@ -36,6 +44,7 @@ public class BasicEnemy : MonoBehaviour
     void Start()
     {
 		characterController = GetComponent<CharacterController>();
+		ChangeColor(color);
     }
 
     // Update is called once per frame
@@ -46,6 +55,7 @@ public class BasicEnemy : MonoBehaviour
 		{
 			Vector3 targetDiff = PlayerScript.Instance.transform.position - transform.position;
 			targetDiff.y = 0;
+			transform.rotation = Quaternion.LookRotation(targetDiff);
 			if (targetDiff.sqrMagnitude > MoveDistance * MoveDistance)
 			{
 				movementDirection = targetDiff.normalized * speed;
@@ -56,7 +66,9 @@ public class BasicEnemy : MonoBehaviour
 			}
 			else if (targetDiff.sqrMagnitude <= fireDistance * fireDistance)
 			{
-				GameObject projectileObject = Instantiate(projectile, transform.position, Quaternion.identity);
+				Vector3 firePoint = transform.position;
+				firePoint.y += fireHeight;
+				GameObject projectileObject = Instantiate(projectile, firePoint, Quaternion.identity);
 				EnemyProjectile firingProjectile = projectileObject.GetComponent<EnemyProjectile>();
 				firingProjectile.Direction = targetDiff;
 				firingProjectile.ProjectileColor = color;
@@ -64,6 +76,25 @@ public class BasicEnemy : MonoBehaviour
 			}
 		}
     }
+
+	public void ChangeColor(BasicEnemy.EnemyColor newColor)
+	{
+		color = newColor;
+		Material mat = null;
+		switch (color)
+		{
+			case EnemyColor.red:
+				mat = redMat;
+				break;
+			case EnemyColor.green:
+				mat = greenMat;
+				break;
+			case EnemyColor.blue:
+				mat = blueMat;
+				break;
+		}
+		ColorThings.material = mat;
+	}
 
 	private void FixedUpdate()
 	{
