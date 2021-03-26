@@ -135,7 +135,7 @@ public class PlayerScript : MonoBehaviour
 
 		if (Input.GetButtonDown("Fire2") || (Input.GetAxis("ControllerShield") > 0.3))
 		{
-			if (shieldInputStuff)
+			if (!shieldInputStuff)
 			{
 				RotateShield();
 				shieldInputStuff = true;
