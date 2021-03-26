@@ -29,6 +29,8 @@ public class PlayerScript : MonoBehaviour
 
 	private float Cooldown;
 
+	private int ammunition;
+
 	public static PlayerScript Instance
 	{
 		get;
@@ -43,6 +45,7 @@ public class PlayerScript : MonoBehaviour
 		characterController = GetComponent<CharacterController>();
 		Instance = this;
 		frontColor = BasicEnemy.EnemyColor.red;
+		ammunition = 0;
 		//testUI.SetFront(frontColor);
 	}
 
@@ -104,13 +107,14 @@ public class PlayerScript : MonoBehaviour
 		if (Cooldown < fireRate)
 		{
 			Cooldown += Time.deltaTime;
-		}else if (Input.GetButtonDown("Fire1") || Input.GetAxis("ControllerFire") > 0.8)
+		}else if (ammunition >0 && (Input.GetButtonDown("Fire1") || Input.GetAxis("ControllerFire") > 0.8))
 		{
 			Vector3 firePoint = transform.position;
 			firePoint.y += fireHeight;
 			GameObject projectileObject = Instantiate(projectile, firePoint, Quaternion.identity);
 			PlayerProjectile firingProjectile = projectileObject.GetComponent<PlayerProjectile>();
 			firingProjectile.Direction = transform.forward;
+			ammunition--;
 		}
 
 		if (Input.GetButtonDown("Fire2"))
@@ -181,7 +185,7 @@ public class PlayerScript : MonoBehaviour
 			angleToPosition = ((angleToPosition % 360) + 360) % 360;
 			int shield = Mathf.FloorToInt(angleToPosition / 120);
 			int hit = ((int)frontColor + shield) % 3;
-			switch (hit)
+			/*switch (hit)
 			{
 				case 0:
 					Debug.Log("hit red shield");
@@ -192,15 +196,15 @@ public class PlayerScript : MonoBehaviour
 				case 2:
 					Debug.Log("hit blue shield");
 					break;
+			}*/
+			if ((int)projectile.ProjectileColor == hit)
+			{
+				ammunition++;
 			}
-			//if((int)projectile.ProjectileColor == hit)
-			//{
-			//	Debug.Log("blocked projectile");
-			//}
-			//else
-			//{
-			//	Debug.Log("hit");
-			//}
+			else
+			{
+				Debug.Log("hit");
+			}
 		}
 	}
 
