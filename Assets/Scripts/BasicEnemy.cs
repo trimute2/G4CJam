@@ -42,23 +42,26 @@ public class BasicEnemy : MonoBehaviour
     void Update()
     {
 		movementDirection = Vector3.zero;
-		Vector3 targetDiff = PlayerScript.Instance.transform.position - transform.position;
-		targetDiff.y = 0;
-		if(targetDiff.sqrMagnitude > MoveDistance * MoveDistance)
+		if (PlayerScript.Instance != null)
 		{
-			movementDirection = targetDiff.normalized * speed;
-		}
-		if(Cooldown < fireRate)
-		{
-			Cooldown += Time.deltaTime;
-		}
-		else if(targetDiff.sqrMagnitude <= fireDistance * fireDistance)
-		{
-			GameObject projectileObject = Instantiate(projectile, transform.position, Quaternion.identity);
-			EnemyProjectile firingProjectile = projectileObject.GetComponent<EnemyProjectile>();
-			firingProjectile.Direction = targetDiff;
-			firingProjectile.ProjectileColor = color;
-			Cooldown = 0;
+			Vector3 targetDiff = PlayerScript.Instance.transform.position - transform.position;
+			targetDiff.y = 0;
+			if (targetDiff.sqrMagnitude > MoveDistance * MoveDistance)
+			{
+				movementDirection = targetDiff.normalized * speed;
+			}
+			if (Cooldown < fireRate)
+			{
+				Cooldown += Time.deltaTime;
+			}
+			else if (targetDiff.sqrMagnitude <= fireDistance * fireDistance)
+			{
+				GameObject projectileObject = Instantiate(projectile, transform.position, Quaternion.identity);
+				EnemyProjectile firingProjectile = projectileObject.GetComponent<EnemyProjectile>();
+				firingProjectile.Direction = targetDiff;
+				firingProjectile.ProjectileColor = color;
+				Cooldown = 0;
+			}
 		}
     }
 

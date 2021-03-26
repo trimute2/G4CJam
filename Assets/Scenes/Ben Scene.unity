@@ -11886,6 +11886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bbacdd8262fd594784506725b66cd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: 0
   MoveDistance: 15
   fireDistance: 20
   speed: 0.15
@@ -42777,6 +42778,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9070c611e86a448b6bb011f1cfb3ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 3
   speed: 0.5
   fireRate: 0.1
   playerCamera: {fileID: 1835054978}
@@ -42785,6 +42787,7 @@ MonoBehaviour:
   fireHeight: 1.465
   testUI: {fileID: 0}
   shield: {fileID: 1118634994}
+  DamageParticle: {fileID: 154672, guid: e518b4ac4faac2246965b820629da9f4, type: 3}
 --- !u!1 &1835054976
 GameObject:
   m_ObjectHideFlags: 0

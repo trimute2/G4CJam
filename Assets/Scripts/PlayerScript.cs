@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
 
+	public int health = 3;
 
 	public float speed = 5;
 
@@ -20,6 +21,8 @@ public class PlayerScript : MonoBehaviour
 	public TestUI testUI;
 
 	public Transform shield;
+
+	public GameObject DamageParticle;
 	//Vector3 HorizontalInputModifier = new Vector3(0.5f, 0, -0.5f);
 	//Vector3 VerticalInputModifier = new Vector3(0.5f, 0, 0.5f);
 
@@ -201,60 +204,26 @@ public class PlayerScript : MonoBehaviour
 			if ((int)projectile.ProjectileColor == hit)
 			{
 				ammunition++;
-				Debug.Log(ammunition);
+				
 			}
 			else
 			{
-				Debug.Log("hit");
+				TakeDamage();
 			}
 
 			projectile.MunitionHandled = true;
 		}
 	}
 
-	//copied from here for testing keeping it in until we get a way to represent shields
-
-	private void OnDrawGizmos()
+	private void TakeDamage()
 	{
-		
-		Gizmos.color = Color.red;
-		float ang = -transform.rotation.eulerAngles.y;
-		Vector3 dir = new Vector3(Mathf.Cos((ang+90) * Mathf.Deg2Rad), 0, Mathf.Sin((ang+90) * Mathf.Deg2Rad));
-		DrawWireArc(transform.position, dir, 120, 5);
-		Gizmos.color = Color.blue;
-		dir = new Vector3(Mathf.Cos((ang + 210) * Mathf.Deg2Rad), 0, Mathf.Sin((ang + 210) * Mathf.Deg2Rad));
-		DrawWireArc(transform.position, dir, 120, 5);
-		Gizmos.color = Color.green;
-		dir = new Vector3(Mathf.Cos((ang + 330) * Mathf.Deg2Rad), 0, Mathf.Sin((ang + 330) * Mathf.Deg2Rad));
-		DrawWireArc(transform.position, dir, 120, 5);
-	}
-
-	public static void DrawWireArc(Vector3 position, Vector3 dir, float anglesRange, float radius, float maxSteps = 20)
-	{
-		var srcAngles = GetAnglesFromDir(position, dir);
-		var initialPos = position;
-		var posA = initialPos;
-		var stepAngles = anglesRange / maxSteps;
-		var angle = srcAngles - anglesRange / 2;
-		for (var i = 0; i <= maxSteps; i++)
+		health--;
+		Vector3 firePoint = transform.position;
+		firePoint.y += fireHeight;
+		Instantiate(DamageParticle, firePoint, Quaternion.identity);
+		if(health <= 0)
 		{
-			var rad = Mathf.Deg2Rad * angle;
-			var posB = initialPos;
-			posB += new Vector3(radius * Mathf.Cos(rad), 0, radius * Mathf.Sin(rad));
-
-			Gizmos.DrawLine(posA, posB);
-
-			angle += stepAngles;
-			posA = posB;
+			Destroy(gameObject);
 		}
-		Gizmos.DrawLine(posA, initialPos);
-	}
-
-	static float GetAnglesFromDir(Vector3 position, Vector3 dir)
-	{
-		var forwardLimitPos = position + dir;
-		var srcAngles = Mathf.Rad2Deg * Mathf.Atan2(forwardLimitPos.z - position.z, forwardLimitPos.x - position.x);
-
-		return srcAngles;
 	}
 }

@@ -6,6 +6,9 @@ using UnityEngine;
 //im not sure if i really need a seperate class for enemy and player projectile but for now it is quicker and easier to copy paste than to think about it
 public class PlayerProjectile : MonoBehaviour
 {
+
+	public GameObject TransformEffect;
+
 	[SerializeField]
 	private float _speed;
 
@@ -51,6 +54,10 @@ public class PlayerProjectile : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
+		if(other.GetComponent<BasicEnemy>() != null)
+		{
+			Instantiate(TransformEffect, transform.position, Quaternion.identity);
+		}
 		Destroy(gameObject);
 	}
 
