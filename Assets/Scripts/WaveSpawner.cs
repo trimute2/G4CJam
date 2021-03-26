@@ -12,6 +12,8 @@ public class WaveSpawner : MonoBehaviour
 
 	public Action<int> OnWaveEnd;
 
+	public Canvas WinCanvas;
+
 	private int killsCurrentWave;
 	private int TotalCurrentEnemies;
 
@@ -43,6 +45,10 @@ public class WaveSpawner : MonoBehaviour
 		if(TotalCurrentEnemies == 0)
 		{
 			OnWaveEnd?.Invoke(currentWave);
+			if(currentWave == waves.Length)
+			{
+				WinCanvas.enabled = true;
+			}
 		}
 		if( currentWave < waves.Length &&
 			((waves[currentWave].WaitForAllEnemiesToDie && TotalCurrentEnemies == 0) || 

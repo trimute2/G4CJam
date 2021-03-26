@@ -25,6 +25,8 @@ public class PlayerScript : MonoBehaviour
 
 	public GameObject DamageParticle;
 
+	public Canvas LoseCanvas;
+
 	[Header("Sounds")]
 	public AudioClip[] FireSounds;
 	public AudioClip BlockSound;
@@ -247,6 +249,7 @@ public class PlayerScript : MonoBehaviour
 		Instantiate(DamageParticle, firePoint, Quaternion.identity);
 		if(health <= 0)
 		{
+			LoseCanvas.enabled = true;
 			Destroy(gameObject);
 		}
 	}
