@@ -13,6 +13,8 @@ public class PlayerScript : MonoBehaviour
 	public GameObject projectile;
 
 	public TestUI testUI;
+
+	public Transform shield;
 	//Vector3 HorizontalInputModifier = new Vector3(0.5f, 0, -0.5f);
 	//Vector3 VerticalInputModifier = new Vector3(0.5f, 0, 0.5f);
 
@@ -34,7 +36,7 @@ public class PlayerScript : MonoBehaviour
 		characterController = GetComponent<CharacterController>();
 		Instance = this;
 		frontColor = BasicEnemy.EnemyColor.red;
-		testUI.SetFront(frontColor);
+		//testUI.SetFront(frontColor);
 	}
 
     // Update is called once per frame
@@ -103,7 +105,8 @@ public class PlayerScript : MonoBehaviour
 		int shieldColor = (int)frontColor;
 		shieldColor = (shieldColor + 1) % 3;
 		frontColor = (BasicEnemy.EnemyColor)shieldColor;
-		testUI.SetFront(frontColor);
+		shield.Rotate(0, -120, 0);
+		//testUI.SetFront(frontColor);
 	}
 
 	private void UpdateRotationWithMouse()
@@ -122,7 +125,7 @@ public class PlayerScript : MonoBehaviour
 		//Debug.Log(x +","+ y);
 		float angle = Mathf.Atan2(y, x);
 		//Debug.Log(angle);
-		transform.rotation = Quaternion.Euler(0, angle * Mathf.Rad2Deg, 0);
+		transform.rotation = Quaternion.Euler(0, (angle * Mathf.Rad2Deg)+90, 0);
 	}
 
 	private void FixedUpdate()
@@ -155,7 +158,7 @@ public class PlayerScript : MonoBehaviour
 
 			int hit = ((int)frontColor + shield)%3;*/
 			Vector3 toPosition = (projectile.transform.position - transform.position).normalized;
-			float angleToPosition = Vector3.SignedAngle(transform.right, toPosition,Vector3.up)+60;
+			float angleToPosition = Vector3.SignedAngle(transform.right, toPosition,Vector3.up)+150;
 			angleToPosition = ((angleToPosition % 360) + 360) % 360;
 			int shield = Mathf.FloorToInt(angleToPosition / 120);
 			int hit = ((int)frontColor + shield) % 3;
@@ -189,13 +192,13 @@ public class PlayerScript : MonoBehaviour
 		
 		Gizmos.color = Color.red;
 		float ang = -transform.rotation.eulerAngles.y;
-		Vector3 dir = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), 0, Mathf.Sin(ang * Mathf.Deg2Rad));
+		Vector3 dir = new Vector3(Mathf.Cos((ang+90) * Mathf.Deg2Rad), 0, Mathf.Sin((ang+90) * Mathf.Deg2Rad));
 		DrawWireArc(transform.position, dir, 120, 5);
 		Gizmos.color = Color.blue;
-		dir = new Vector3(Mathf.Cos((ang + 120) * Mathf.Deg2Rad), 0, Mathf.Sin((ang + 120) * Mathf.Deg2Rad));
+		dir = new Vector3(Mathf.Cos((ang + 210) * Mathf.Deg2Rad), 0, Mathf.Sin((ang + 210) * Mathf.Deg2Rad));
 		DrawWireArc(transform.position, dir, 120, 5);
 		Gizmos.color = Color.green;
-		dir = new Vector3(Mathf.Cos((ang + 240) * Mathf.Deg2Rad), 0, Mathf.Sin((ang + 240) * Mathf.Deg2Rad));
+		dir = new Vector3(Mathf.Cos((ang + 330) * Mathf.Deg2Rad), 0, Mathf.Sin((ang + 330) * Mathf.Deg2Rad));
 		DrawWireArc(transform.position, dir, 120, 5);
 	}
 
