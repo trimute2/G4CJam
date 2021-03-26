@@ -14273,6 +14273,7 @@ GameObject:
   - component: {fileID: 424006}
   - component: {fileID: 19803030}
   - component: {fileID: 19970574}
+  - component: {fileID: 2573202752744082710}
   m_Layer: 0
   m_Name: HealBig
   m_TagString: Untagged
@@ -14654,7 +14655,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 0
       maxCurve:
@@ -14707,7 +14708,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 0
       maxCurve:
@@ -19017,6 +19018,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &2573202752744082710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 152564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa221b2238145e64ab4855deba5e0720, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &159118
 GameObject:
   m_ObjectHideFlags: 0
