@@ -6,11 +6,16 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {
 
+
 	public float speed = 5;
+
+	public float fireRate = 5f;
 
 	public Camera playerCamera;
 
 	public GameObject projectile;
+
+	public float fireHeight;
 
 	public TestUI testUI;
 
@@ -21,6 +26,8 @@ public class PlayerScript : MonoBehaviour
 	private Vector3 movementDirection;
 
 	private CharacterController characterController;
+
+	private float Cooldown;
 
 	public static PlayerScript Instance
 	{
@@ -94,6 +101,18 @@ public class PlayerScript : MonoBehaviour
 		{
 			UpdateRotationWithMouse();
 		}
+		if (Cooldown < fireRate)
+		{
+			Cooldown += Time.deltaTime;
+		}else if (Input.GetButtonDown("Fire1"))
+		{
+			Vector3 firePoint = transform.position;
+			firePoint.y += fireHeight;
+			GameObject projectileObject = Instantiate(projectile, firePoint, Quaternion.identity);
+			PlayerProjectile firingProjectile = projectileObject.GetComponent<PlayerProjectile>();
+			firingProjectile.Direction = transform.forward;
+		}
+
 		if (Input.GetButtonDown("Fire2"))
 		{
 			RotateShield();
