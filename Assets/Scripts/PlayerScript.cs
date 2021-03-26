@@ -117,7 +117,7 @@ public class PlayerScript : MonoBehaviour
 			ammunition--;
 		}
 
-		if (Input.GetButtonDown("Fire2"))
+		if (Input.GetButtonDown("Fire2") || Input.GetAxis("ControllerShield") > 0.3)
 		{
 			RotateShield();
 		}
