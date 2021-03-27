@@ -11,6 +11,7 @@ public class HealArea : MonoBehaviour
 		if(player != null)
 		{
 			player.health++;
+			player.Uicontroller.UpdateHealth(player.health);
 			Instantiate(disapearEffect, transform.position, Quaternion.identity);
 			Destroy(gameObject);
 		}

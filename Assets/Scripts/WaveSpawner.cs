@@ -47,7 +47,7 @@ public class WaveSpawner : MonoBehaviour
 			OnWaveEnd?.Invoke(currentWave);
 			if(currentWave == waves.Length)
 			{
-				WinCanvas.enabled = true;
+				WinCanvas.gameObject.SetActive(true);
 			}
 		}
 		if( currentWave < waves.Length &&

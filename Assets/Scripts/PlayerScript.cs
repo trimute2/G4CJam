@@ -19,7 +19,7 @@ public class PlayerScript : MonoBehaviour
 
 	public float fireHeight;
 
-	public TestUI testUI;
+	public UIController Uicontroller;
 
 	public Transform shield;
 
@@ -61,6 +61,9 @@ public class PlayerScript : MonoBehaviour
 		Instance = this;
 		frontColor = BasicEnemy.EnemyColor.red;
 		ammunition = 0;
+		Uicontroller.UpdateHealth(health);
+		Uicontroller.UpdateShield(frontColor);
+		Uicontroller.UpdateAmmo(ammunition);
 		//testUI.SetFront(frontColor);
 	}
 
@@ -132,6 +135,7 @@ public class PlayerScript : MonoBehaviour
 			audioSource.PlayOneShot(FireSounds[Random.Range(0,FireSounds.Length)]);
 
 			ammunition--;
+			Uicontroller.UpdateAmmo(ammunition);
 			Cooldown = 0;
 		}
 
@@ -157,6 +161,7 @@ public class PlayerScript : MonoBehaviour
 		shieldColor = (shieldColor + 1) % 3;
 		frontColor = (BasicEnemy.EnemyColor)shieldColor;
 		shield.Rotate(0, -120, 0);
+		Uicontroller.UpdateShield(frontColor);
 		//testUI.SetFront(frontColor);
 	}
 
@@ -229,7 +234,7 @@ public class PlayerScript : MonoBehaviour
 			{
 				audioSource.PlayOneShot(BlockSound);
 				ammunition++;
-				
+				Uicontroller.UpdateAmmo(ammunition);
 			}
 			else
 			{
@@ -247,9 +252,10 @@ public class PlayerScript : MonoBehaviour
 		Vector3 firePoint = transform.position;
 		firePoint.y += fireHeight;
 		Instantiate(DamageParticle, firePoint, Quaternion.identity);
+		Uicontroller.UpdateHealth(health);
 		if(health <= 0)
 		{
-			LoseCanvas.enabled = true;
+			LoseCanvas.gameObject.SetActive(true);
 			Destroy(gameObject);
 		}
 	}
